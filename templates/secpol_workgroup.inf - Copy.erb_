@@ -1,0 +1,61 @@
+[Unicode]
+Unicode=yes
+[System Access]
+MinimumPasswordAge = 1
+MaximumPasswordAge = 30
+MinimumPasswordLength = 14
+PasswordComplexity = 1
+PasswordHistorySize = 24
+LockoutBadCount = 10
+LockoutDuration = 15
+ResetLockoutCount = 15
+RequireLogonToChangePassword = 0
+ForceLogoffWhenHourExpire = 0
+NewAdministratorName = "crazyadmin"
+NewGuestName = "Guuest"
+ClearTextPassword = 0
+LSAAnonymousNameLookup = 0
+EnableAdminAccount = 1
+EnableGuestAccount = 0
+[Event Audit]
+
+[Version]
+signature="$CHICAGO$"
+Revision=1
+
+[System Log]
+MaximumLogSize = 32768
+AuditLogRetentionPeriod = 0
+RestrictGuestAccess = 1
+[Security Log]
+MaximumLogSize = 81920
+AuditLogRetentionPeriod = 0
+RestrictGuestAccess = 1
+[Application Log]
+MaximumLogSize = 32768
+AuditLogRetentionPeriod = 0
+RestrictGuestAccess = 1
+
+[Privilege Rights]
+<% node['security_policy']['rights']['workgroup'].each do |setting, value| %>
+    # <% unless File.read('C:\\chef\\cache\\audit.json').include?(setting.to_s) -%>
+<%= value['CIS_Control'] %>
+    <% end %>
+<% end %>
+
+[System Access]
+<% node['security_policy']['access'].each do |setting, value| %>
+    <% unless value.nil? -%>
+<%= setting %> = <%= value %>
+    <% end %>
+<% end %>
+
+[Privilege Rights]
+<% node['security_policy']['rights'].each do |setting, value| %>
+    <% unless value.nil? -%>
+<%= setting %> = <%= value %>
+    <% end %>
+<% end %>
+
+[Profile Description]
+Description=Windows 2019 CIS Workgroup One Time Hardening
