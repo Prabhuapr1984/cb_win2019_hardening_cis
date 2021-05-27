@@ -1,0 +1,55 @@
+[Unicode]
+Unicode=yes
+[System Access]
+MinimumPasswordAge = 1
+MaximumPasswordAge = 30
+MinimumPasswordLength = 14
+PasswordComplexity = 1
+PasswordHistorySize = 24
+LockoutBadCount = 10
+LockoutDuration = 15
+ResetLockoutCount = 15
+RequireLogonToChangePassword = 0
+ForceLogoffWhenHourExpire = 0
+NewAdministratorName = "crazyadmin"
+NewGuestName = "Guuest"
+ClearTextPassword = 0
+LSAAnonymousNameLookup = 0
+EnableAdminAccount = 1
+EnableGuestAccount = 0
+[Event Audit]
+AuditSystemEvents = 1
+AuditLogonEvents = 1
+AuditObjectAccess = 0
+AuditPrivilegeUse = 3
+AuditPolicyChange = 1
+AuditAccountManage = 3
+AuditProcessTracking = 3
+AuditDSAccess = 3
+AuditAccountLogon = 3
+[Version]
+signature="$CHICAGO$"
+Revision=1
+
+[System Log]
+MaximumLogSize = 32768
+AuditLogRetentionPeriod = 0
+RestrictGuestAccess = 1
+[Security Log]
+MaximumLogSize = 81920
+AuditLogRetentionPeriod = 0
+RestrictGuestAccess = 1
+[Application Log]
+MaximumLogSize = 32768
+AuditLogRetentionPeriod = 0
+RestrictGuestAccess = 1
+
+[Privilege Rights]
+<% node['security_policy']['rights']['domain'].each do |setting, value| %>
+    <% unless File.read('C:\\chef\\cache\\audit.json').include?(setting.to_s) -%>
+<%= value['CIS_Control'] %>
+    <% end %>
+<% end %>
+
+[Profile Description]
+Description=Windows 2019 CIS Domain Continuous Hardening
